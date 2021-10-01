@@ -15,6 +15,7 @@ branches:
 before_install:
   - docker pull aerokube/selenoid:latest
   - docker pull selenoid/vnc:chrome_92.0
+  - docker pull selenoid/video-recorder:latest-release
   - docker run -d --name selenoid -p 4444:4444
     -v /var/run/docker.sock:/var/run/docker.sock
     -v $(pwd)/src/main/resources/selenoid/config:/etc/selenoid
