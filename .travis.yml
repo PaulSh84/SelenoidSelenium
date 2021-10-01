@@ -1,0 +1,28 @@
+os: linux
+dist: xenial
+language: java
+jdk: openjdk8
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/.m2
+
+branches:
+  only:
+    - master
+before_install:
+  - docker pull aerokube/selenoid:latest
+  - docker run --name selenoid -p 4444:4444
+    -v /var/run/docker.sock:/var/run/docker.sock
+    -v $(pwd)/src/main/resources/selenoid/config:/etc/selenoid
+    -v $(pwd)/src/main/resources/selenoid/video:/opt/selenoid/video
+    -v $(pwd)/src/main/resources/selenoid/logs/:/opt/selenoid/logs/
+    -e OVERRIDE_VIDEO_OUTPUT_DIR=$(pwd)/src/main/resources/selenoid/video
+    aerokube/selenoid:latest-release -log-output-dir /opt/selenoid/logs -save-all-logs
+  - docker ps -a
+
+script:
+  - mvn clean verify
+  # copy logs and video to server to view
