@@ -3,6 +3,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,7 +25,7 @@ public class SignUpPage {
 
   public SignUpPage(RemoteWebDriver driver) {
     this.driver = driver;
-    this.wait = new WebDriverWait(driver, 30);
+    this.wait = new WebDriverWait(driver, 10);
   }
 
   public SignUpPage open() {
@@ -69,10 +70,15 @@ public class SignUpPage {
   }
 
   private boolean isCookiePopupAppearedAndReadyToBeClicked() {
-    return wait.until(
-        ExpectedConditions.and(
-            presenceOfElementLocated(cookiePopUp),
-            presenceOfElementLocated(cookieAcceptButton),
-            elementToBeClickable(cookieAcceptButton)));
+    try {
+      return wait.until(
+          ExpectedConditions.and(
+              presenceOfElementLocated(cookiePopUp),
+              presenceOfElementLocated(cookieAcceptButton),
+              elementToBeClickable(cookieAcceptButton))
+      );
+    } catch (TimeoutException e){
+      return false;
+    }
   }
 }
