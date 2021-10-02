@@ -75,6 +75,8 @@ public class SignUpPage {
       WebElement popUp = wait.until(
               presenceOfElementLocated(cookiePopUp));
       System.out.println("pop up is located");
+      System.out.println("Printing out inner html of the pop-up");
+      System.out.println(popUp.getAttribute("innerHTML"));
       WebElement button = wait.until(
               elementToBeClickable(cookieAcceptButton));
       System.out.println("accept button clickable");
