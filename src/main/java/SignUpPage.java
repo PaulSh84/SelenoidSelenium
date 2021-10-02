@@ -4,6 +4,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -71,13 +72,15 @@ public class SignUpPage {
 
   private boolean isCookiePopupAppearedAndReadyToBeClicked() {
     try {
-      return wait.until(
-          ExpectedConditions.and(
-              presenceOfElementLocated(cookiePopUp),
-              presenceOfElementLocated(cookieAcceptButton),
-              elementToBeClickable(cookieAcceptButton))
-      );
+      WebElement popUp = wait.until(
+              presenceOfElementLocated(cookiePopUp));
+      System.out.println("pop up is located");
+      WebElement button = wait.until(
+              elementToBeClickable(cookieAcceptButton));
+      System.out.println("accept button clickable");
+      return true;
     } catch (TimeoutException e){
+      System.out.println("Timed out after 10 sec");
       return false;
     }
   }
