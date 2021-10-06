@@ -22,7 +22,7 @@ public class SignUpPage {
   private final By shareCheckbox = cssSelector("#register-thirdparty");
   private final By registerButton = cssSelector("button");
   private final By cookiePopUp = cssSelector("div#onetrust-banner-sdk");
-  private final By cookieAcceptButton = cssSelector("button#onetrust-accept-btn-handler");
+  private final By cookieAcceptButton = cssSelector(System.getProperty("cookieButtonElementPath"));
 
   public SignUpPage(RemoteWebDriver driver) {
     this.driver = driver;
@@ -30,7 +30,7 @@ public class SignUpPage {
   }
 
   public SignUpPage open() {
-    driver.get("https://www.spotify.com/us/signup/");
+    driver.get("https://www.spotify.com/pl/signup/");
     return this;
   }
 

@@ -32,22 +32,41 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+        <properties>
+          <cookieButtonPath>button.onetrust-close-btn-handler.onetrust-close-btn-ui.banner-close-button.ot-close-icon</cookieButtonPath>
+        </properties>
     </profile>
     <profile>
       <id>local-selenoid</id>
-      <activation>
-        <property>
-          <name>local</name>
-          <value>true</value>
-        </property>
-      </activation>
+      <properties>
+        <cookieButtonPath>button#onetrust-accept-btn-handler</cookieButtonPath>
+      </properties>
     </profile>
   </profiles>
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <systemPropertyVariables>
+            <cookieButtonElementPath>${cookieButtonPath}</cookieButtonElementPath>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-help-plugin</artifactId>
         <version>2.2</version>
+        <executions>
+          <execution>
+            <id>show-profiles</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>active-profiles</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
