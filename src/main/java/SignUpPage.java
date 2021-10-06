@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignUpPage {
+
   private final RemoteWebDriver driver;
   private final WebDriverWait wait;
   private final By emailField = cssSelector("#email");
@@ -22,7 +23,7 @@ public class SignUpPage {
   private final By shareCheckbox = cssSelector("#register-thirdparty");
   private final By registerButton = cssSelector("button");
   private final By cookiePopUp = cssSelector("div#onetrust-banner-sdk");
-  private final By cookieAcceptButton = cssSelector(System.getProperty("cookieButtonElementPath"));
+  private final By cookieAcceptButton = cssSelector(System.getProperty("cookieButtonElementCss"));
 
   public SignUpPage(RemoteWebDriver driver) {
     this.driver = driver;
@@ -42,22 +43,33 @@ public class SignUpPage {
 
   public SignUpPage typeConfirmEmailField(String email) {
     driver.findElement(confirmEmailField).sendKeys(email);
-    return this;}
+    return this;
+  }
 
   public SignUpPage typePassword(String password) {
     driver.findElement(passwordField).sendKeys(password);
-    return this;}
+    return this;
+  }
 
-  public SignUpPage typeName(String name) {return this;}
+  public SignUpPage typeName(String name) {
+    return this;
+  }
 
   public SignUpPage setMonth(String month) {
-    return this;}
+    return this;
+  }
 
-  public SignUpPage typeDay(String day) {return this;}
+  public SignUpPage typeDay(String day) {
+    return this;
+  }
 
-  public SignUpPage typeYear(String year) {return this;}
+  public SignUpPage typeYear(String year) {
+    return this;
+  }
 
-  public SignUpPage setShare(boolean share) {return this;}
+  public SignUpPage setShare(boolean share) {
+    return this;
+  }
 
   public void submit() {
     driver.findElement(registerButton).click();
@@ -72,17 +84,13 @@ public class SignUpPage {
 
   private boolean isCookiePopupAppearedAndReadyToBeClicked() {
     try {
-      WebElement popUp = wait.until(
-              presenceOfElementLocated(cookiePopUp));
-      System.out.println("pop up is located");
-      System.out.println("Printing out inner html of the pop-up");
-      System.out.println(popUp.getAttribute("innerHTML"));
-      WebElement button = wait.until(
-              elementToBeClickable(cookieAcceptButton));
-      System.out.println("accept button clickable");
-      return true;
-    } catch (TimeoutException e){
-      System.out.println("Timed out after 10 sec");
+      return wait.until(
+          ExpectedConditions.and(
+              presenceOfElementLocated(cookiePopUp),
+              presenceOfElementLocated(cookieAcceptButton),
+              elementToBeClickable(cookieAcceptButton)
+          ));
+    } catch (TimeoutException e) {
       return false;
     }
   }

@@ -51,7 +51,7 @@
         <version>3.0.0-M5</version>
         <configuration>
           <systemPropertyVariables>
-            <cookieButtonElementPath>${cookieButtonPath}</cookieButtonElementPath>
+            <cookieButtonElementCss>${cookieButtonPath}</cookieButtonElementCss>
           </systemPropertyVariables>
         </configuration>
       </plugin>
